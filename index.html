@@ -6,47 +6,177 @@
 -->
 <html>
 	<head>
-		<title>Jurhell Hughes Portfolio</title>
+		<title>Ju'Rhell Hughes — Game Programmer</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			:root {
+				--accent:      #00e5ff;
+				--accent2:     #7c3aed;
+				--accent-glow: rgba(0,229,255,0.18);
+				--font-mono:   'Courier New', Courier, monospace;
+			}
+ 
+			/* ── Scanline overlay on hero ── */
+			#banner::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: repeating-linear-gradient(
+					0deg, transparent, transparent 2px,
+					rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px
+				);
+				pointer-events: none;
+				z-index: 1;
+			}
+			#banner .inner { position: relative; z-index: 2; }
+ 
+			/* ── Glitch name ── */
+			#banner h2 {
+				font-family: var(--font-mono);
+				font-size: 3.4em;
+				letter-spacing: 0.06em;
+				color: #fff;
+				text-shadow:
+					2px 0 0 var(--accent),
+					-2px 0 0 #ff00c8,
+					0 0 24px var(--accent-glow);
+				animation: glitch 5s infinite;
+			}
+			@keyframes glitch {
+				0%,88%,100% { text-shadow: 2px 0 0 var(--accent), -2px 0 0 #ff00c8, 0 0 24px var(--accent-glow); }
+				90%  { text-shadow: -4px 0 0 var(--accent), 4px 0 0 #ff00c8; clip-path: inset(30% 0 40% 0); }
+				92%  { text-shadow:  4px 0 0 var(--accent),-4px 0 0 #ff00c8; clip-path: inset(60% 0 10% 0); transform: translate(-2px,0); }
+				94%  { text-shadow: 2px 0 0 var(--accent), -2px 0 0 #ff00c8, 0 0 24px var(--accent-glow); clip-path: none; transform: none; }
+			}
+ 
+			/* ── Blinking cursor ── */
+			.cursor-blink {
+				display: inline-block; width: 2px; height: 1.1em;
+				background: var(--accent); vertical-align: text-bottom;
+				margin-left: 2px; animation: blink 1s step-end infinite;
+			}
+			@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+ 
+			/* ── Header brand ── */
+			#header h1 a { font-family: var(--font-mono); letter-spacing: 0.08em; color: var(--accent) !important; }
+ 
+			/* ── About section with photo ── */
+			#one .about-wrap {
+				display: flex;
+				align-items: center;
+				gap: 3em;
+				text-align: left;
+				max-width: 860px;
+				margin: 0 auto;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			#one .about-photo {
+				flex-shrink: 0;
+				width: 130px;
+				height: 155px;
+				object-fit: cover;
+				object-position: top center;
+				border-radius: 6px;
+				border: 2px solid var(--accent);
+				box-shadow: 0 0 28px var(--accent-glow), 0 0 60px rgba(0,229,255,0.08);
+			}
+			#one .about-text h2 {
+				font-family: var(--font-mono);
+				font-size: 1.6em;
+				color: #fff;
+				margin-bottom: 0.5em;
+				letter-spacing: 0.04em;
+			}
+			#one .about-text p { margin: 0; line-height: 1.75; }
+ 
+			/* ── Skills grid ── */
+			#three .features li {
+				background: rgba(0,229,255,0.04);
+				border: 1px solid rgba(0,229,255,0.12);
+				border-radius: 4px;
+				transition: border-color 0.25s, box-shadow 0.25s;
+			}
+			#three .features li:hover {
+				border-color: var(--accent);
+				box-shadow: 0 0 20px var(--accent-glow);
+			}
+			#three .features li::before { color: var(--accent) !important; }
+			#three .features li h3 {
+				font-family: var(--font-mono);
+				font-size: 0.9em;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+			#three .inner > header.major h2 { font-family: var(--font-mono); }
+ 
+			/* ── CTA ── */
+			#cta header h2 { font-family: var(--font-mono); letter-spacing: 0.06em; }
+ 
+			/* ── Tech tag pills ── */
+			.tech-tags { margin-top: 0.8em; display: flex; flex-wrap: wrap; gap: 0.4em; }
+			.tech-tags span {
+				font-family: var(--font-mono);
+				font-size: 0.65em;
+				letter-spacing: 0.1em;
+				padding: 0.2em 0.65em;
+				border-radius: 2px;
+				background: rgba(0,229,255,0.1);
+				border: 1px solid rgba(0,229,255,0.35);
+				color: var(--accent);
+				text-transform: uppercase;
+			}
+			.spotlight .content h2 { font-family: var(--font-mono); font-size: 1.2em; letter-spacing: 0.04em; }
+ 
+			/* ── Console prompt ── */
+			.console-prompt { font-family: var(--font-mono); font-size: 0.78em; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; }
+			.console-prompt .p { color: var(--accent); }
+		</style>
 	</head>
 	<body class="landing is-preload">
-
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
-
-				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="index.html">Spectral</a></h1>
-						<nav id="nav">
-							<ul>
-								<li class="special">
-									<a href="#menu" class="menuToggle"><span>Menu</span></a>
-									<div id="menu">
-										<ul>
-											<li><a href="index.html">Home</a></li>
-											<li><a href="generic.html">Generic</a></li>
-											<li><a href="elements.html">Elements</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</nav>
-					</header>
-
-				<!-- Banner -->
-					<section id="banner">
-						<div class="inner">
-							<h2>Jurhell Hughes</h2>
-							<p>Unity and Unreal Engine Programmer<br /> </p>
-							<ul class="actions special">
-								<li><a href="#" class="button primary">Activate</a></li>
-							</ul>
-						</div>
-						<a href="#one" class="more scrolly">Portfolio</a>
-					</section>
+ 
+		<div id="page-wrapper">
+ 
+			<!-- Header -->
+			<header id="header" class="alt">
+				<h1><a href="index.html">&lt;JH.DEV&gt;</a></h1>
+				<nav id="nav">
+					<ul>
+						<li class="special">
+							<a href="#menu" class="menuToggle"><span>Menu</span></a>
+							<div id="menu">
+								<ul>
+									<li><a href="#one" class="scrolly">About</a></li>
+									<li><a href="#two" class="scrolly">Projects</a></li>
+									<li><a href="#three" class="scrolly">Skills</a></li>
+									<li><a href="#cta" class="scrolly">Contact</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</header>
+ 
+			<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<h2>Ju'Rhell Hughes</h2>
+					<p>
+						<span class="console-prompt"><span class="p">$ </span>role --describe</span><br /><br />
+						Unity &amp; Unreal Engine Programmer<br />
+						Gameplay · AI · Systems<span class="cursor-blink"></span>
+					</p>
+					<ul class="actions special">
+						<li><a href="#two" class="button primary scrolly">View Projects</a></li>
+					</ul>
+				</div>
+				<a href="#one" class="more scrolly">About Me</a>
+			</section>
+ 
 			<!-- One — About -->
 			<section id="one" class="wrapper style1 special">
 				<div class="inner">
